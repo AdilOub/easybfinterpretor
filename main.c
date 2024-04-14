@@ -4,20 +4,23 @@
 #include "main.h"
 
 int main(int argc, char* argv[]){
-    printf("Hello World\n");
+    printf("Hello: \n");
     if(argc < 3){
         printf("Usage: %s \"<code en brainfuck>\" <memory>\n", argv[0]);
         return EXIT_FAILURE;
     }
     char* command = argv[1];
-    int memory = atoi(argv[2]);
-    if(memory == 0){
+    int memsize = atoi(argv[2]);
+    if(memsize == 0){
         printf("Memory is 0 or not an interger\n");
         printf("Usage: %s \"<code en brainfuck>\" <memory>\n", argv[0]);
         return EXIT_FAILURE;
     }
 
-    return 0;
+    char* memory = malloc(sizeof(char)*memsize);
+    int res = interpret(memory, command, 0, memsize); 
+    free(memory);
+    return res;
 }
 
 int interpret(char* memory, char* cmd, int index, int size){
